@@ -1,0 +1,27 @@
+.matrix {
+    display: flex;
+    justify-content: center;
+}
+
+#matrix-columns {
+    display: flex;
+    flex-direction: row;
+}
+
+#matrix-column-elements {
+    display: block;
+    margin: 5px;
+}
+
+#matrix-column-elements>div {
+    margin: 5px 0;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+    border-radius: 6px;
+    color: white;
+    background-color: blueviolet;
+}
