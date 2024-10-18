@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './Desk.css';
+import https from '../../util/https'
+
+const http = https();
 
 export default function Desk() {
 
+  const colors = ["#FC5858", "#FCAD58", "#58FC61", "#948597", "#B058FC"];
   const [blockList, setBlockList] = useState([]);
   const [matrix, setMatrix] = useState([]);
 
   useEffect(() => {
-    const newBlockList = [];
-    setBlockList(newBlockList);
+    const fetchData = async () => {
+      try {
+        const data = await http.get('/block');
+        setBlockList(data); 
+      } catch (error) {
+        console.error('Error fetching blocks from backend:', error);
+      }
+    };
+    fetchData();
   }, [])
 
   // map block list to matrix
@@ -19,7 +30,7 @@ export default function Desk() {
       blockList.forEach(block => {
         let isBlockAdded = false;
         while (!isBlockAdded) {  //?
-          isBlockAdded = addColumnToMatrix(block, newMatrix);
+          isBlockAdded = addBlockToMatrix(block, newMatrix);
           // console.log(isBlockAdded);
           if (!isBlockAdded) { //?
             expandMatrix(newMatrix);
@@ -36,12 +47,16 @@ export default function Desk() {
     return newMatrix;
   }
 
-  const addNewBlockToList = () => {
+  const addNewBlockToList = async () => {
     const newBlock = { id: blockList.length + 1, color: getDifferentColor() };
     setBlockList(prev => [...prev, newBlock]);
-
+    try {
+      await sendBlockListToBackend(newBlock);
+    } catch (error) {
+      console.error('Error sending block to backend:', error);
+    }
   }
-  const addColumnToMatrix = (block, matrix) => {
+  const addBlockToMatrix = (block, matrix) => {
     const columnsLength = matrix.map(column => column.length); //[1, 0]
     const minLength = Math.min.apply(null, columnsLength); // ?
     // console.log('column length array', columnsLength);
@@ -61,7 +76,6 @@ export default function Desk() {
     matrix.push([]);
   }
 
-  const colors = ["#FC5858", "#FCAD58", "#58FC61", "#948597", "#B058FC"];
 
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
@@ -79,6 +93,17 @@ export default function Desk() {
     return newColor;
   };
 
+  const sendBlockListToBackend = async (block) => {
+    try {
+      const data = await http.post('/block', {
+        position: block.id,
+        color: block.color,
+      });
+      console.log('Success:', data); // Handle success if needed
+    } catch (error) {
+      console.error('Error sending block to backend:', error); // Handle errors
+    }
+  };
   return (<>
     <div className="matrix">
       <div id="matrix-columns">{matrix.length > 0 ? matrix.map((column, columnIndex) => {
@@ -91,7 +116,6 @@ export default function Desk() {
                 backgroundColor: element.color,
                 border: "1px solid #333",
               }}>
-                {element.id}
               </div>
             ))
           }</div>
@@ -101,7 +125,7 @@ export default function Desk() {
     </div>
     <button
       className='button'
-      onClick={addNewBlockToList} // Call method to add new block
+      onClick={addNewBlockToList}
     >
       Lägg till ruta
     </button>
