@@ -69,21 +69,21 @@ export default function Desk() {
   const getDifferentColor = () => {
     // Get the last block's color
     const lastBlockColor = blockList.length > 0 ? blockList[blockList.length - 1].color : null;
-    console.log(lastBlockColor + ' last')
+    // console.log(lastBlockColor + ' last')
     let newColor = getRandomColor();
-    console.log(newColor + ' new')
+    // console.log(newColor + ' new')
     while (newColor === lastBlockColor) {
       newColor = getRandomColor();
-      console.log('reget ' + newColor)
+      // console.log('reget ' + newColor)
     }
     return newColor;
   };
 
   return (<>
     <div className="matrix">
-      <div id="matrix-columns">{matrix.length > 0 ? matrix.map(column => {
+      <div id="matrix-columns">{matrix.length > 0 ? matrix.map((column, columnIndex) => {
         return (
-          <div id="matrix-column-elements"> {
+          <div key={columnIndex} id="matrix-column-elements"> {
             column.map((element, index) => (
               <div key={index} style={{
                 width: "50px",
