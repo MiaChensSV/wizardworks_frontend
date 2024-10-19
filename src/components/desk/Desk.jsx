@@ -5,8 +5,7 @@ import https from '../../util/https'
 const http = https();
 
 export default function Desk() {
-
-  const colors = ["#FC5858", "#FCAD58", "#58FC61", "#948597", "#B058FC"];
+  const [colors, setColors] = useState([])
   const [blockList, setBlockList] = useState([]);
   const [matrix, setMatrix] = useState([]);
 
@@ -14,7 +13,8 @@ export default function Desk() {
     const fetchData = async () => {
       try {
         const data = await http.get('/getBoardData');
-        setBlockList(data);
+        setBlockList(data.blocksState);
+        setColors(data.avaiableColors)
       } catch (error) {
         console.error('Error fetching blocks from backend:', error);
       }
@@ -109,7 +109,9 @@ export default function Desk() {
   const clearBlockList = async () => {
     try {
       const status = await http.remove('/clearBlocksState');
-      if (status === 200) {
+      if (status === 200 || status.ok) {
+        setBlockList([]);
+        setMatrix([]);
         console.log("BlocksState has been cleared");
       }
     } catch (error) {
