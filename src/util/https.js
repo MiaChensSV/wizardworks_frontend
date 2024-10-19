@@ -9,9 +9,9 @@ const http = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    ...options.headers, 
+                    ...options.headers,
                 },
-                ...options, 
+                ...options,
             });
 
             if (!response.ok) {
@@ -22,14 +22,13 @@ const http = () => {
             return data;
         } catch (error) {
             console.error('GET request failed:', error);
-            throw error; 
+            throw error;
         }
     };
 
     // Function to handle POST requests
     const post = async (endpoint, body) => {
         try {
-            console.log(body)
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'POST',
                 headers: {
@@ -50,7 +49,26 @@ const http = () => {
         }
     };
 
-    return { get, post }; // Export the methods as an object
+    const remove = async (endpoint) => {
+        try {
+            const response = await fetch(`${BASE_URL}${endpoint}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            return response.status;
+        }
+        catch (error) {
+            console.error('Delete request failed:', error)
+            throw error;
+        }
+    }
+
+    return { get, post, remove };
 };
 
 export default http;

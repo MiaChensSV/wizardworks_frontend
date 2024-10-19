@@ -13,8 +13,8 @@ export default function Desk() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await http.get('/block');
-        setBlockList(data); 
+        const data = await http.get('/getBoardData');
+        setBlockList(data);
       } catch (error) {
         console.error('Error fetching blocks from backend:', error);
       }
@@ -43,7 +43,7 @@ export default function Desk() {
 
   // Methods
   const initMatrix = () => {
-    const newMatrix = [[], []];
+    const newMatrix = [[],];
     return newMatrix;
   }
 
@@ -73,7 +73,8 @@ export default function Desk() {
   }
 
   const expandMatrix = (matrix) => {
-    matrix.push([]);
+    // matrix.push([]);
+    matrix.unshift([]);
   }
 
 
@@ -95,15 +96,26 @@ export default function Desk() {
 
   const sendBlockListToBackend = async (block) => {
     try {
-      const data = await http.post('/block', {
+      const data = await http.post('/addBlock', {
         position: block.id,
         color: block.color,
       });
-      console.log('Success:', data); // Handle success if needed
+      console.log('Success:', data);
     } catch (error) {
-      console.error('Error sending block to backend:', error); // Handle errors
+      console.error('Error sending block to backend:', error);
     }
   };
+
+  const clearBlockList = async () => {
+    try {
+      const status = await http.remove('/clearBlocksState');
+      if (status === 200) {
+        console.log("BlocksState has been cleared");
+      }
+    } catch (error) {
+      console.error('Error when deleting blocks:', error);
+    }
+  }
   return (<>
     <div className="matrix">
       <div id="matrix-columns">{matrix.length > 0 ? matrix.map((column, columnIndex) => {
@@ -123,12 +135,20 @@ export default function Desk() {
       }) : <></>}</div>
 
     </div>
-    <button
-      className='button'
-      onClick={addNewBlockToList}
-    >
-      Lägg till ruta
-    </button>
+    <div className='button-group'>
+      <button
+        className='button'
+        onClick={addNewBlockToList}
+      >
+        Lägg till ruta
+      </button>
+      <button
+        className='button'
+        onClick={clearBlockList}
+      >
+        Re-Start
+      </button>
+    </div>
   </>
   )
 }

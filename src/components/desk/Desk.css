@@ -5,7 +5,7 @@
 
 #matrix-columns {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
 }
 
 #matrix-column-elements {
@@ -17,11 +17,18 @@
     margin: 5px 0;
 }
 
-.button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 20px;
-    border-radius: 6px;
-    color: white;
-    background-color: blueviolet;
+.button-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    gap: 30px;
+    .button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+        border-radius: 6px;
+        color: white;
+        background-color: blueviolet;
+    }
 }
