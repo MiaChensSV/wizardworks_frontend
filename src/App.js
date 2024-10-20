@@ -1,5 +1,5 @@
 import './App.css';
-import Desk from './components/desk/Desk';
+import Desk from './components/Board/Board';
 
 function App() {
   return (
