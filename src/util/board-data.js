@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://localhost:7017/api';
-const ENDPOINT_GET_BOARD_DATA = '/Block/GetBoardData';
-const ENDPOINT_ADD_BLOCK = '/Block/AddBlock';
-const ENDPOINT_CLEAR_BLOCK_LIST = '/Block/ClearBlocksState';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const ENDPOINT_GET_BOARD_DATA = process.env.REACT_APP_GET_BOARD_DATA;
+const ENDPOINT_ADD_BLOCK = process.env.REACT_APP_ADD_BLOCK;
+const ENDPOINT_CLEAR_BLOCK_LIST = process.env.REACT_APP_CLEAR_BLOCK_LIST;
 
 const getBoardData = async () => {
   return new Promise((resolve, reject) => {
