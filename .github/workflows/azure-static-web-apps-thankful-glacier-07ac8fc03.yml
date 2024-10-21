@@ -9,10 +9,10 @@ on:
     branches:
       - master
 env:
-    REACT_APP_ADD_BLOCK: ${{variables.REACT_APP_ADD_BLOCK}}
-    REACT_APP_BASE_URL: ${{variables.REACT_APP_BASE_URL}}
-    REACT_APP_CLEAR_BLOCK_LIST: ${{variables.REACT_APP_CLEAR_BLOCK_LIST}}
-    REACT_APP_GET_BOARD_DATA: ${{variables.REACT_APP_GET_BOARD_DATA}}
+    REACT_APP_ADD_BLOCK: ${{vars.REACT_APP_ADD_BLOCK}}
+    REACT_APP_BASE_URL: ${{vars.REACT_APP_BASE_URL}}
+    REACT_APP_CLEAR_BLOCK_LIST: ${{vars.REACT_APP_CLEAR_BLOCK_LIST}}
+    REACT_APP_GET_BOARD_DATA: ${{vars.REACT_APP_GET_BOARD_DATA}}
     CI: false
 jobs:
   build_and_deploy_job:
