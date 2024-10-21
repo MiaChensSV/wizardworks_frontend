@@ -47,7 +47,6 @@ export default function Desk() {
 
   // Event handlers
   const addNewBlockBtnClick = async () => {
-    console.log(process.env);
     if (hasOngoingHttpPromise) return;
     startBtnDisableTimer();
     setHasOngoingHttpPromise(true);

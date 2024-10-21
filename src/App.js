@@ -7,8 +7,6 @@ function App() {
       <header className="app-header">
         <div>
           <Desk />
-          environmental variable test
-          {process.env.REACT_APP_BASE_URL}
         </div>
       </header>
     </div>
